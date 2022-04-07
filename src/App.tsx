@@ -3,12 +3,12 @@ import Header from "./Header";
 import './App.css';
 import InputField from './InputField';
 import List from "./List";
+import Footer from "./Footer"
 
 
 export interface todo {
   todos: string[] ,
   setTodos?: React.Dispatch<React.SetStateAction<string[]>>,
- // flag?: boolean,
   editTodo?: any,
   deleteTodo?: any
 }
@@ -29,13 +29,16 @@ function App() {
 
   
   const editTodo = (idx:number) => {
-    let editedTodo:any = todos.find((el:any,index:any)=>{
-       return index===idx;
-    }) ;
-    console.log(editedTodo);
-    //let p = document.getElementById()
-    editedTodo.p.setAttribute("contentEditable", "true");
-
+ 
+    let id:string =  "p"+`${idx}`
+    let p = document.getElementById(id)! as HTMLParagraphElement;
+    p.setAttribute("contentEditable", "true");
+    p.onmouseout = function (){
+      if(p.contentEditable){
+        p.setAttribute("contentEditable", "false");
+      }
+    };
+     
   }
  
 
@@ -44,6 +47,7 @@ function App() {
       <Header/>
       <InputField todos={todos} setTodos={setTodos} /> 
       <List todos={todos} editTodo={editTodo}  deleteTodo={deleteTodo}/>
+      <Footer/>
     </div>
   );
 }
